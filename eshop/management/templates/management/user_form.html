@@ -1,0 +1,95 @@
+{% extends "store/base.html" %}
+{% load static %}
+
+{% block content %}
+<!-- Link to user.js (if you have any JavaScript for form enhancements) -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/user.js' %}"></script>
+
+<header class="bg-dark py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">{% if form.instance.pk %}Edit User{% else %}Add User{% endif %}</h1>
+            <p class="lead fw-normal text-white-50 mb-0">Fill out the details below</p>
+        </div>
+    </div>
+</header>
+
+<section class="py-5">
+    <div class="container px-4 px-lg-5 mt-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-6">
+                <div class="card shadow-sm p-4 mb-4">
+                    <form method="post" id="user-form">
+                        {% csrf_token %}
+                        
+                        <!-- User Fields -->
+                        <div class="mb-3">
+                            <label for="id_username" class="form-label">{{ form.username.label }}</label>
+                            {{ form.username }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_email" class="form-label">{{ form.email.label }}</label>
+                            {{ form.email }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_first_name" class="form-label">{{ form.first_name.label }}</label>
+                            {{ form.first_name }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_last_name" class="form-label">{{ form.last_name.label }}</label>
+                            {{ form.last_name }}
+                        </div>
+                        
+                        <!-- Password Fields for New Users Only -->
+                        {% if not form.instance.pk %}
+                        <div class="mb-3">
+                            <label for="id_password1" class="form-label">{{ form.password1.label }}</label>
+                            {{ form.password1 }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_password2" class="form-label">{{ form.password2.label }}</label>
+                            {{ form.password2 }}
+                        </div>
+                        {% else %}
+                        <!-- Option to Update Password for Existing Users -->
+                        <div class="mb-3">
+                            <label for="id_new_password" class="form-label">New Password (leave blank to keep current password)</label>
+                            {{ form.new_password }}
+                        </div>
+                        <div class="mb-3">
+                            <label for="id_new_password2" class="form-label">Confirm New Password</label>
+                            {{ form.new_password2 }}
+                        </div>
+                        {% endif %}
+                        
+                        <div class="mb-3 form-check">
+                            {{ form.is_active }}
+                            <label for="id_is_active" class="form-check-label">{{ form.is_active.label }}</label>
+                        </div>
+                        <div class="mb-3 form-check">
+                            {{ form.is_staff }}
+                            <label for="id_is_staff" class="form-check-label">{{ form.is_staff.label }}</label>
+                        </div>
+                        <div class="mb-3 form-check">
+                            {{ form.is_superuser }}
+                            <label for="id_is_superuser" class="form-check-label">{{ form.is_superuser.label }}</label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-dark">Save</button>
+                        <a href="{% url 'management:user_list' %}" class="btn btn-secondary">Cancel</a>
+                    </form>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="card h-100 shadow-sm">
+                    <!-- Optionally, display user details here if editing -->
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

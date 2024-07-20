@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from store.models import Item, Category
-from management.forms import ItemForm, CategoryForm, UserForm
+from management.forms import ItemForm, CategoryForm, UserCreationFormWithPassword, UserUpdateForm
 from django.contrib import messages
 from .mixins import AdminRequiredMixin
 from django.contrib.auth.models import User
+from django.urls import reverse_lazy
 
 # Item Views
 class ItemListView(AdminRequiredMixin, View):
@@ -106,40 +107,40 @@ class UserListView(AdminRequiredMixin, View):
 
 class UserCreateView(AdminRequiredMixin, View):
     def get(self, request):
-        form = UserForm()
-        return render(request, 'management/user_form.html', {'form': form})
+        form = UserCreationFormWithPassword()
+        return render(request, 'management/user_form.html', {'form': form, 'title': 'Create User'})
 
     def post(self, request):
-        form = UserForm(request.POST)
+        form = UserCreationFormWithPassword(request.POST)
         if form.is_valid():
             form.save()
             messages.success(request, 'User was successfully created.')
             return redirect('management:user_list')
         for error in form.errors.values():
             messages.error(request, error)
-        return render(request, 'management/user_form.html', {'form': form})
+        return render(request, 'management/user_form.html', {'form': form, 'title': 'Create User'})
 
 class UserUpdateView(AdminRequiredMixin, View):
     def get(self, request, pk):
         user = get_object_or_404(User, pk=pk)
-        form = UserForm(instance=user)
-        return render(request, 'management/user_form.html', {'form': form})
+        form = UserUpdateForm(instance=user)
+        return render(request, 'management/user_form.html', {'form': form, 'title': 'Update User'})
 
     def post(self, request, pk):
         user = get_object_or_404(User, pk=pk)
-        form = UserForm(request.POST, instance=user)
+        form = UserUpdateForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
             messages.success(request, 'User was successfully updated.')
             return redirect('management:user_list')
         for error in form.errors.values():
             messages.error(request, error)
-        return render(request, 'management/user_form.html', {'form': form})
+        return render(request, 'management/user_form.html', {'form': form, 'title': 'Update User'})
 
 class UserDeleteView(AdminRequiredMixin, View):
     def post(self, request, pk):
         user = get_object_or_404(User, pk=pk)
-        username = user.username
+        user_name = user.username
         user.delete()
-        messages.success(request, f'User "{username}" was successfully deleted.')
+        messages.success(request, f'User "{user_name}" was successfully deleted.')
         return redirect('management:user_list')
