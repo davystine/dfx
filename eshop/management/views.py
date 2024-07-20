@@ -1,9 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views import View
 from store.models import Item, Category
-from management.forms import ItemForm, CategoryForm
+from management.forms import ItemForm, CategoryForm, UserForm
 from django.contrib import messages
 from .mixins import AdminRequiredMixin
+from django.contrib.auth.models import User
 
 # Item Views
 class ItemListView(AdminRequiredMixin, View):
@@ -96,3 +97,49 @@ class CategoryDeleteView(AdminRequiredMixin, View):
         category.delete()
         messages.success(request, f'Category "{category_name}" was successfully deleted.')
         return redirect('management:category_list')
+
+# User Views
+class UserListView(AdminRequiredMixin, View):
+    def get(self, request):
+        users = User.objects.all()
+        return render(request, 'management/user_list.html', {'users': users})
+
+class UserCreateView(AdminRequiredMixin, View):
+    def get(self, request):
+        form = UserForm()
+        return render(request, 'management/user_form.html', {'form': form})
+
+    def post(self, request):
+        form = UserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'User was successfully created.')
+            return redirect('management:user_list')
+        for error in form.errors.values():
+            messages.error(request, error)
+        return render(request, 'management/user_form.html', {'form': form})
+
+class UserUpdateView(AdminRequiredMixin, View):
+    def get(self, request, pk):
+        user = get_object_or_404(User, pk=pk)
+        form = UserForm(instance=user)
+        return render(request, 'management/user_form.html', {'form': form})
+
+    def post(self, request, pk):
+        user = get_object_or_404(User, pk=pk)
+        form = UserForm(request.POST, instance=user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'User was successfully updated.')
+            return redirect('management:user_list')
+        for error in form.errors.values():
+            messages.error(request, error)
+        return render(request, 'management/user_form.html', {'form': form})
+
+class UserDeleteView(AdminRequiredMixin, View):
+    def post(self, request, pk):
+        user = get_object_or_404(User, pk=pk)
+        username = user.username
+        user.delete()
+        messages.success(request, f'User "{username}" was successfully deleted.')
+        return redirect('management:user_list')

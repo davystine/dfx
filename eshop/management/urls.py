@@ -1,5 +1,5 @@
 from django.urls import path
-from . import views
+from . import views, UserListView, UserCreateView, UserUpdateView, UserDeleteView
 
 app_name = 'management'  # Namespace for this app
 
@@ -15,4 +15,9 @@ urlpatterns = [
     path('categories/add/', views.CategoryCreateView.as_view(), name='category_add'),
     path('categories/edit/<int:pk>/', views.CategoryUpdateView.as_view(), name='category_edit'),
     path('categories/delete/<int:pk>/', views.CategoryDeleteView.as_view(), name='category_delete'),
+    
+    path('users/', UserListView.as_view(), name='user_list'),
+    path('users/create/', UserCreateView.as_view(), name='user_create'),
+    path('users/<int:pk>/update/', UserUpdateView.as_view(), name='user_update'),
+    path('users/<int:pk>/delete/', UserDeleteView.as_view(), name='user_delete'),
 ]
