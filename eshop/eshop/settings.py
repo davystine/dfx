@@ -11,14 +11,14 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 import os
 from pathlib import Path
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 #load environmental variable
-load_dotenv()
+# load_dotenv()
 
 
 # Quick-start development settings - unsuitable for production
@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-qn^p*+77e1nm+1^cv0ae7+5e*+t)vm9#agv05#6s#m%s%vaj+g
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -84,19 +84,19 @@ WSGI_APPLICATION = 'eshop.wsgi.application'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db.sqlite3',
-    # },
-
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'DFXdatabase',
-        'HOST': 'localhost',
-        'PORT': '3306', 
-        'USER': 'root',
-        'PASSWORD': 'root',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     },
+
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': 'DFXdatabase',
+    #     'HOST': 'localhost',
+    #     'PORT': '3306', 
+    #     'USER': 'root',
+    #     'PASSWORD': 'root',
+    # },
     
     # 'default': {
     #     'ENGINE': 'django.db.backends.postgresql',
