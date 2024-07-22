@@ -7,6 +7,7 @@
 <script src="{% static 'js/item.js' %}"></script>
 
 
+
 <header class="bg-dark py-5">
     <div class="container px-4 px-lg-5 my-5">
         <div class="text-center text-white">
@@ -45,7 +46,7 @@
                     <div class="card-footer bg-transparent border-0 d-flex justify-content-between p-3">
                         <a href="{% url 'management:item_edit' item.pk %}" class="btn btn-warning">Edit</a>
                         {% if user.is_superuser %}
-                        <a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-item-id="{{ item.pk }}" data-item-name="{{ item.name }}">Delete</a>
+                        <a href="" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal" data-item-id="{{ item.pk }}" data-item-name="{{ item.name }}">Delete</a>
                         {% endif %}
                     </div>
                 </div>

@@ -23,14 +23,11 @@ from django.views.static import serve
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('store.urls')),
-    path('', include('cart.urls')),
-    path('', include('management.urls')),
-    path('', include('payment.urls')),
-    
-
-    
-    
+    path('', include('store.urls', namespace='store')),
+    path('cart/', include('cart.urls', namespace='cart')),
+    path('management/', include('management.urls', namespace='management')),
+    path('payment/', include('payment.urls', namespace='payment')),
+     
 ]
 
 # Serve static and media files in development mode

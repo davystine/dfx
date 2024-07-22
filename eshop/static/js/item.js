@@ -49,7 +49,6 @@ $(document).ready(function() {
 
 
     // static/js/item.js
-
     $(document).ready(function() {
         $('#deleteModal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget); // Button that triggered the modal
@@ -58,8 +57,9 @@ $(document).ready(function() {
 
             var modal = $(this);
             modal.find('.modal-body #itemName').text(itemName);
-            modal.find('#delete-form').attr('action', '/management/items/delete/' + itemId + '/');
+            modal.find('#delete-form').attr('action', '{% url "management:item_delete" 0 %}'.slice(0, -2) + itemId + '/');
         });
     });
+
     
 });

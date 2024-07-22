@@ -55,10 +55,10 @@ $(document).ready(function() {
             var button = $(event.relatedTarget); // Button that triggered the modal
             var itemId = button.data('item-id'); // Extract info from data-* attributes
             var itemName = button.data('item-name');
-
+    
             var modal = $(this);
             modal.find('.modal-body #itemName').text(itemName);
-            modal.find('#delete-form').attr('action', '/management/items/delete/' + itemId + '/');
+            modal.find('#delete-form').attr('action', '{% url "management:item_delete" 0 %}'.replace('0', itemId)); // Replace the 0 with the itemId
         });
     });
     
