@@ -57,9 +57,9 @@ $(document).ready(function() {
 
             var modal = $(this);
             modal.find('.modal-body #itemName').text(itemName);
-            modal.find('#delete-form').attr('action', '{% url "management:item_delete" 0 %}'.slice(0, -2) + itemId + '/');
+            modal.find('#delete-form').attr('action', `/management/items/delete/${itemId}/`);
         });
     });
 
-    
+
 });

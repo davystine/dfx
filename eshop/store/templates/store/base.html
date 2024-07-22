@@ -22,7 +22,7 @@
 </head>
 <body class="d-flex flex-column min-vh-100">
     <div class="content-wrapper flex-grow-1">
-        <!-- Navigation--> 
+        <!-- Navigation-->
         {% include 'store/navbar.html' %}
         {% if messages %}
             {% for message in messages %}
@@ -44,7 +44,7 @@
                 {% endif %}
             {% endfor %}
         {% endif %}
-        <!-- block content --> 
+        <!-- block content -->
         <div class="content">
             {% block content %}
             {% endblock %}
